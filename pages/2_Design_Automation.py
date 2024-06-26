@@ -173,7 +173,7 @@ def synchronized_input(label, min_val, max_val, initial_val, step, format_str):
 
 mu_ratio = synchronized_input(r"$\mu^*$", 0.017, 0.033, 0.017, 0.0001, "%.4f")
 st_val = synchronized_input(r"$St$", 0.015, 8.164, 0.015, 0.001, "%.3f")
-R_val = synchronized_input(r"$R^*$", 0.03, 0.84, 0.03, 0.01, "%.2f")
+R_val = synchronized_input(r"$R^*$", 0.014, 0.5, 0.014, 0.001, "%.3f")
 
 # Step 2: Predict Q^*_range
 q_dict = {0:r'0.0020 <$Q^*_{Range}$< 0.0071',
