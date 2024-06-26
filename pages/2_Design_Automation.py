@@ -14,7 +14,6 @@ st.set_page_config(
     layout="wide"
 ) 
 
-# Define the ResidualBlock and ResNet classes (for L* prediction)
 class ResidualBlock(nn.Module):
     def __init__(self, input_size, output_size, dropout_p=0.5):
         super(ResidualBlock, self).__init__()
@@ -54,18 +53,15 @@ class ResNet(nn.Module):
     def forward(self, x):
         return self.model(x)
 
-# Load the scaler for L* prediction
 with open('model_lib/L_scaler.pkl', 'rb') as f:
     scaler_l = pickle.load(f)
 
-# Load the L* model
 input_size_l = 5
 output_size_l = 1
 resnet_model = ResNet(input_size_l, output_size_l, residual_blocks_neurons=[32, 16, 8], dropout_p=0.5)
 resnet_model.load_state_dict(torch.load('model_lib/resnet_l_model.pth'))
 resnet_model.eval()
 
-# Define the prediction function for L* (or L_ratio)
 def predict_l_ratio(input_data):
     feature_names_l = ['l', 'mu_ratio', 'Q_ratio', 'st', 'R']
     df_input = pd.DataFrame(input_data, columns=feature_names_l)
@@ -75,7 +71,6 @@ def predict_l_ratio(input_data):
         prediction = resnet_model(X_input_tensor)
     return prediction.numpy()
 
-# Define the FourierSeries and FourierModel classes (for Q^*_range prediction)
 class FourierSeries(nn.Module):
     def __init__(self, input_size, num_harmonics):
         super(FourierSeries, self).__init__()
@@ -107,18 +102,15 @@ class FourierModel(nn.Module):
         output = self.linear(fourier_output)
         return output
 
-# Load the scaler for Q^*_range prediction
 with open('model_lib/Q_scaler.pkl', 'rb') as f:
     scaler_q = pickle.load(f)
 
-# Load the Q^*_range model
 input_size_q = 3
-output_size_q = 7  # 7 classes for classification
+output_size_q = 7  
 fourier_model = FourierModel(input_size_q, 60, output_size_q)
 fourier_model.load_state_dict(torch.load('model_lib/fourier_classification_q_ratio_model.pth'))
 fourier_model.eval()
 
-# Define the prediction function for Q^*_range
 def predict_q_range(input_data):
     feature_names_q = ['mu_ratio', 'st', 'R']
     df_input = pd.DataFrame(input_data, columns=feature_names_q)
@@ -129,18 +121,15 @@ def predict_q_range(input_data):
         probabilities = F.softmax(output, dim=1)
     return probabilities.numpy()
 
-# Streamlit app title
 st.title("Design Automation")
 
-# Initialize session state if not already done
 if "q_range" not in st.session_state:
     st.session_state.q_range = None
 if "l_ratio" not in st.session_state:
     st.session_state.l_ratio = None
 
-# Create synchronized slider and number input for each feature
 def synchronized_input(label, min_val, max_val, initial_val, step, format_str):
-    col1, col2 = st.columns([3, 1])  # Adjust the ratio as needed
+    col1, col2 = st.columns([3, 1])
     
     with col1:
         slider_val = st.slider(
@@ -164,7 +153,6 @@ def synchronized_input(label, min_val, max_val, initial_val, step, format_str):
             key=f"number_{label}"
         )
     
-    # Ensure synchronization
     if number_val != slider_val:
         slider_val = number_val
         number_val = slider_val
@@ -175,7 +163,7 @@ mu_ratio = synchronized_input(r"$\mu^*$", 0.017, 0.033, 0.017, 0.0001, "%.4f")
 st_val = synchronized_input(r"$St$", 0.015, 8.164, 0.015, 0.001, "%.3f")
 R_val = synchronized_input(r"$R^*$", 0.014, 0.5, 0.014, 0.001, "%.3f")
 
-# Step 2: Predict Q^*_range
+
 q_dict = {0:r'0.0020 <$Q^*_{Range}$< 0.0071',
  1:r'0.0071 <$Q^*_{Range}$< 0.0107',
  2:r'0.0107 <$Q^*_{Range}$< 0.0138',
@@ -187,32 +175,23 @@ q_dict = {0:r'0.0020 <$Q^*_{Range}$< 0.0071',
 if st.button(r"Predict $Q^*_{range}$"):
     input_data_q = np.array([[mu_ratio, st_val, R_val]])
     probabilities = predict_q_range(input_data_q)
-
-    # Find the index of the maximum probability
     max_prob_index = np.argmax(probabilities[0])
+    st.session_state.q_range = q_dict[max_prob_index]
 
-    # Get the corresponding class label
-    st.session_state.q_range = q_dict[max_prob_index]  # Store in session state
-
-# Display the Q^*_range prediction if available
 if st.session_state.q_range:
     st.write(f"{st.session_state.q_range}")
 
 l_design = synchronized_input(r"$l_{Design}\; (\mu m)$", 82.6, 233.0, 82.6, 0.1, "%.1f")
 Q_ratio = synchronized_input(r"$Q^*$", 0.002, 0.149,0.002, 0.001, "%.3f")
 
-# Step 4: Predict l*
 if st.button(r"Predict $l^*$"):
-    # Convert $l_{Design}$ from micrometers to meters for L* prediction
     l_design_m = l_design * 1e-6
     input_data_l = np.array([[l_design_m, mu_ratio, Q_ratio, st_val, R_val]])
     prediction_l = predict_l_ratio(input_data_l)
     st.session_state.l_ratio = prediction_l[0][0]
-# Display the l* prediction if available
 if st.session_state.l_ratio is not None:
     st.write(f"$l^*$ = {st.session_state.l_ratio:.4f}")
 
-    # Plot the channel geometry
     st.markdown("<h3 style='color: #87CEEB;'>Channel Geometry</h3>", unsafe_allow_html=True)
 
     def plot_channel_geometry(l_design, l_ratio, R_star, Q_ratio, st_number):
@@ -232,7 +211,7 @@ if st.session_state.l_ratio is not None:
             droplet_positions.append(droplet_positions[0] + i * distance)
 
         fig, ax = plt.subplots(figsize=(10, 5))
-        fig.patch.set_alpha(0)  # Make the figure background transparent
+        fig.patch.set_alpha(0)
         ax.patch.set_alpha(0)   
         ax.plot([0, big_channel_width], [0, 0], 'w-', lw=2)
         ax.plot([0, 0], [0, big_channel_height], 'w--', lw=1)
