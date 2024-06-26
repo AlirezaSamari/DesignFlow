@@ -7,7 +7,6 @@ st.set_page_config(
     layout="wide",
 )
 
-
 st.title('DesignFlow')
 st.write("Welcome to **DesignFlow**, a software tool developed during my thesis to simplify design automation for microfluidic co-flow droplet generation. DesignFlow aims to make design processes more efficient by providing easy-to-use features and reliable performance. Whether you’re working on optimizing designs or managing workflows, DesignFlow offers practical solutions to help you achieve your goals. Explore the straightforward, user-friendly approach of DesignFlow and enhance your design efficiency.")
 

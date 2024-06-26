@@ -78,11 +78,7 @@ def predict_R_St(input_data):
         prediction_R = resnet_model_R(X_input_tensor)
         prediction_St = resnet_model_St(X_input_tensor)
     return prediction_R.numpy(), prediction_St.numpy()
-
-# Streamlit app title
 st.title("Flow Dynamics")
-
-# Create synchronized slider and number input for each feature
 def synchronized_input(label, min_val, max_val, initial_val, step, format_str):
     col1, col2 = st.columns([3, 1])
     
@@ -108,7 +104,6 @@ def synchronized_input(label, min_val, max_val, initial_val, step, format_str):
             key=f"number_{label}"
         )
     
-    # Ensure synchronization
     if number_val != slider_val:
         slider_val = number_val
         number_val = slider_val
@@ -121,19 +116,17 @@ we_d = synchronized_input(r"$We_d$", 0.00016, 0.1020, 0.00016, 0.00001, "%.5f")
 ca_c = synchronized_input(r"$Ca_c$", 0.1, 3.9, 0.1, 0.001, "%.3f")
 Q_ratio = synchronized_input(r"$Q^*$", 0.00196, 0.149, 0.00196, 0.0001, "%.4f")
 l_design = synchronized_input(r"$l_{Design}\; (\mu m)$", 82.6, 233.0, 82.6, 0.1, "%.1f")
-# Step 4: Predict R* and St
+
 if st.button(r"Predict $R^*$, $St$"):
     input_data = np.array([[l_ratio, mu_ratio, we_d, ca_c, Q_ratio]])
     prediction_R_star, prediction_St = predict_R_St(input_data)
     st.session_state.R_star = prediction_R_star[0][0]
     st.session_state.St = prediction_St[0][0]
 
-# Display the R* and St predictions if available
 if "R_star" in st.session_state and "St" in st.session_state:
     st.write(f"$R^*$ = {st.session_state.R_star:.4f}")
     st.write(f"$St$ = {st.session_state.St:.4f}")
 
-    # Plotting the channel geometry based on predictions
     st.markdown("<h3 style='color: #87CEEB;'>Channel Geometry</h3>", unsafe_allow_html=True)
 
     def plot_channel_geometry(l_design, l_ratio, R_star, Q_ratio, St):
