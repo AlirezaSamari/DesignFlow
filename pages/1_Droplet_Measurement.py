@@ -78,7 +78,7 @@ def predict_R_St(input_data):
         prediction_R = resnet_model_R(X_input_tensor)
         prediction_St = resnet_model_St(X_input_tensor)
     return prediction_R.numpy(), prediction_St.numpy()
-st.title("Flow Dynamics")
+st.title("Droplet Measurement")
 def synchronized_input(label, min_val, max_val, initial_val, step, format_str):
     col1, col2 = st.columns([3, 1])
     
