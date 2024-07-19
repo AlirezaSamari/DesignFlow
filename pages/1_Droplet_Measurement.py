@@ -9,7 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 st.set_page_config( 
-    page_title="Flow Dynamics", 
+    page_title="Droplet Measurement", 
     page_icon="🌀", 
     layout="wide"
 ) 
