@@ -161,6 +161,7 @@ if "R_star" in st.session_state and "St" in st.session_state:
         # ax.plot([small_channel_x + small_channel_width, small_channel_x + small_channel_width], [small_channel_y, small_channel_y + small_channel_height], 'k-', lw=2, linestyle='--')
 
         droplet_start_y = small_channel_y + small_channel_height / 2
+        droplet_positions = droplet_positions[1:]
         for pos in droplet_positions:
             ax.add_patch(plt.Circle((pos, droplet_start_y), R, color='#87CEEB', alpha=1))
 
