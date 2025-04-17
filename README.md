@@ -11,26 +11,10 @@ A Streamlit‑based tool to simplify design automation for microfluidic co‑flo
 
 Whether you’re exploring design space or optimizing workflows, DesignFlow provides an interactive, no‑code interface to accelerate your microfluidic device designs.
 
----
 
 ## 🚀 Check out the live app here:  
 👉 https://designcoflow.streamlit.app/
 
----
-
-## ✨ Features
-
-- **Forward Prediction**  
-  - Input: channel dimensions (width, height), fluid properties (viscosity, interfacial tension), flow rates.  
-  - Output: predicted droplet diameter & generation rate.
-
-- **Reverse Design (Geometry Optimizer)**  
-  - Input: desired droplet diameter & rate.  
-  - Output: optimized channel width/height ratios and flow settings.
-
-- **Interactive UI**  
-  - Built with Streamlit for fast, in‑browser interaction—no coding required.
----
 
 ## 🛠️ Prerequisites
 
