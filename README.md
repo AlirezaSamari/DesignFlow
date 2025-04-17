@@ -13,9 +13,7 @@ Whether you’re exploring design space or optimizing workflows, DesignFlow prov
 
 ---
 
-## 🚀 Demo
-
-Check out the live app here:  
+## 🚀 Check out the live app here:  
 👉 https://designcoflow.streamlit.app/
 
 ---
@@ -32,13 +30,6 @@ Check out the live app here:
 
 - **Interactive UI**  
   - Built with Streamlit for fast, in‑browser interaction—no coding required.
-
-- **Modular Codebase**  
-  - Core algorithms in `model_lib/`, UI pages under `pages/`, and configuration in `.streamlit/`.
-
-- **Dev Container Support**  
-  - `.devcontainer/` folder for an easy VS Code Remote‑Containers setup.
-
 ---
 
 ## 🛠️ Prerequisites
