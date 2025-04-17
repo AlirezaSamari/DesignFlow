@@ -12,8 +12,7 @@ A Streamlit‑based tool to simplify design automation for microfluidic co‑flo
 Whether you’re exploring design space or optimizing workflows, DesignFlow provides an interactive, no‑code interface to accelerate your microfluidic device designs.
 
 
-## 🚀 Check out the live app here:  
-👉 https://designcoflow.streamlit.app/
+## 🚀 Check out the live app 👉 https://designcoflow.streamlit.app/
 
 
 ## 🛠️ Prerequisites
