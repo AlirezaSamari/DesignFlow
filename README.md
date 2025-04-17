@@ -9,23 +9,7 @@ A Streamlit‑based tool to simplify design automation for microfluidic co‑flo
 - **Forward Prediction:** Estimate droplet diameter and generation rate from channel geometry, flow rates, and fluid properties.  
 - **Reverse Design:** Compute channel geometry ratios needed to achieve target droplet size and rate.  
 
-Whether you’re exploring design space or optimizing workflows, DesignFlow provides an interactive, no‑code interface to accelerate your microfluidic designs.
-
----
-
-## 📖 Table of Contents
-
-1. [Demo](#demo)  
-2. [Features](#features)  
-3. [Prerequisites](#prerequisites)  
-4. [Installation & Setup](#installation--setup)  
-5. [Running the App](#running-the-app)  
-6. [Usage Guide](#usage-guide)  
-7. [Project Structure](#project-structure)  
-8. [Configuration & Customization](#configuration--customization)  
-9. [Contributing](#contributing)  
-10. [License](#license)  
-11. [Contact & Acknowledgments](#contact--acknowledgments)  
+Whether you’re exploring design space or optimizing workflows, DesignFlow provides an interactive, no‑code interface to accelerate your microfluidic device designs.
 
 ---
 
