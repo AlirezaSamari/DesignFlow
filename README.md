@@ -1,7 +1,4 @@
 # DesignFlow
- A tool to simplify design automation for microfluidic co-flow droplet generation.
-Here is the link of the Web-based app: https://designcoflow.streamlit.app/
-# DesignFlow
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-brightgreen.svg)](https://www.python.org/)  
